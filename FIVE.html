@@ -1,0 +1,21 @@
+<style>
+th, td {
+	text-align: center;
+    border: 1px solid black;
+	height : 30px;
+	width  : 30px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<script src="FIVE.js" type="text/javascript"></script>
+<div ng-app="myFIVE" ng-controller="FIVE">
+	<!-- HEAD -->
+	<div>
+		<button ng-click = "init()">RETURN</button><span>{{result}}</span>
+		<table style="">
+			<tr ng-repeat="Y in list">
+				<td ng-repeat="X in Y.dataY" ng-click="go(Y.row,X.dataX)">{{X.STATUS}}</td>
+			</tr>
+		</table>
+	</div>
+</div>

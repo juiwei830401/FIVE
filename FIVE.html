@@ -1,9 +1,22 @@
 <style>
+#P1{
+    position:absolute;
+    top:60px;
+    left:60px;
+    z-index:-1;
+}
+#P2{
+    position:absolute;
+    top:40px;
+    left:40px;
+    z-index:0;
+}
 th, td {
+	vertical-align: middle;
 	text-align: center;
-    border: 1px solid black;
-	height : 30px;
-	width  : 30px;
+	height : 40px;
+	width  : 40px;
+	font-size:30px;
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
@@ -12,9 +25,13 @@ th, td {
 	<!-- HEAD -->
 	<div>
 		<button ng-click = "init()">RETURN</button><span>{{result}}</span>
-		<table style="">
+		<img id="P1" src="img.jpg" width="759px" height="759px">
+		<table id="P2">
 			<tr ng-repeat="Y in list">
-				<td ng-repeat="X in Y.dataY" ng-click="go(Y.row,X.dataX)">{{X.STATUS}}</td>
+				<td ng-repeat="X in Y.dataY" ng-click="go(Y.row,X.dataX)">
+					<span ng-show="X.STATUS == 'O'">○</span>
+					<span ng-show="X.STATUS == 'X'">●</span>
+				</td>
 			</tr>
 		</table>
 	</div>

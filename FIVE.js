@@ -5,10 +5,10 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 		$scope.list = [];
 		
 		//Y軸
-		for(var i = 0; i < 25; i++){
+		for(var i = 0; i < 19; i++){
 			$scope.list.push({dataY : [], row : i});
 			//X軸
-			for(var j = 0; j < 25; j++){
+			for(var j = 0; j < 19; j++){
 				$scope.list[i].dataY.push({dataX : j, STATUS : ''});
 			}
 		}
@@ -36,22 +36,22 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 				var checkD = 0;	/**	判斷:\	**/
 				
 				for(var j = -4; j < 5; j++){
-					if(Number(i + j) >= 0){
+					if(Number(i + j) >= 0 && Number(i + j) < 19){
 						if($scope.list[Y].dataY[i + j].STATUS == $scope.OX){
 							checkA++;
 						}
 					}
-					if(Number(Y + j) >= 0){
+					if(Number(Y + j) >= 0 && Number(Y + j) < 19){
 						if($scope.list[Y + j].dataY[i].STATUS == $scope.OX){
 							checkB++;
 						}
 					}
-					if(Number(Y + j) >= 0 && Number(Y + j) >= 0){
+					if(Number(i + j) >= 0 && Number(Y + j) >= 0 && Number(i + j) < 19 && Number(Y + j) < 19){
 						if($scope.list[Y + j].dataY[i + j].STATUS == $scope.OX){
 							checkC++;
 						}
 					}
-					if(Number(i + j) >= 0 && Number(Y - j) >= 0){
+					if(Number(i - j) >= 0 && Number(Y + j) >= 0 && Number(i - j) < 19 && Number(Y + j) < 19){
 						if($scope.list[Y + j].dataY[i - j].STATUS == $scope.OX){
 							checkD++;
 						}

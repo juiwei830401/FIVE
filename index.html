@@ -29,8 +29,8 @@ th, td {
 		<table id="P2">
 			<tr ng-repeat="Y in list">
 				<td ng-repeat="X in Y.dataY" ng-click="go(Y.row,X.dataX)">
-					<span ng-show="X.STATUS == 'O'">○</span>
-					<span ng-show="X.STATUS == 'X'">●</span>
+					<span ng-show="X.STATUS == 'O'">●</span>
+					<span ng-show="X.STATUS == 'X'">○</span>
 				</td>
 			</tr>
 		</table>

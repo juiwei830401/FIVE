@@ -1,8 +1,8 @@
 <style>
 #P1{
     position:absolute;
-    top:60px;
-    left:60px;
+    top:62px;
+    left:62px;
     z-index:-1;
 }
 #P2{
@@ -11,11 +11,11 @@
     left:40px;
     z-index:0;
 }
-th, td {
+td{
 	vertical-align: middle;
 	text-align: center;
-	height : 40px;
-	width  : 40px;
+	height : 37px;
+	width  : 37px;
 	font-size:30px;
 }
 </style>
@@ -25,12 +25,16 @@ th, td {
 	<!-- HEAD -->
 	<div>
 		<button ng-click = "init()">RETURN</button><span>{{result}}</span>
-		<img id="P1" src="img.jpg" width="759px" height="759px">
+		<table id="P1" style="	border-collapse: collapse;">
+			<tr ng-repeat="Y in grid" style="border: 1px solid black;">
+				<td ng-repeat="X in Y.dataY" style="border: 1px solid black;height:38px; width:38px;"></td>
+			</tr>
+		</table>
 		<table id="P2">
 			<tr ng-repeat="Y in list">
 				<td ng-repeat="X in Y.dataY" ng-click="go(Y.row,X.dataX)">
-					<span ng-show="X.STATUS == 'O'">●</span>
-					<span ng-show="X.STATUS == 'X'">○</span>
+					<span ng-show="X.STATUS == 'O'">○</span>
+					<span ng-show="X.STATUS == 'X'">●</span>
 				</td>
 			</tr>
 		</table>

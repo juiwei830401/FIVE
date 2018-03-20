@@ -1,13 +1,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-<script src="FIVE.js" type="text/javascript"></script>
-<div ng-app="myFIVE" ng-controller="FIVE">
+<script src="FIVE_2.js" type="text/javascript"></script>
+<div ng-app="myFIVE_2" ng-controller="FIVE_2">
 	<!-- HEAD -->
 	<div>
-		<button ng-click = "init()">重來</button>
-		<button ng-click = "start('O')">開始(AI黑)</button>
-		<button ng-click = "start('X')">開始(AI白)</button>
-		<button ng-click = "start('')">開始</button>
-		{{OX}}
-		<canvas id="chess" width="450px" height="450px" ng-click="doClick($event)"></canvas>
+		<button ng-show="start" ng-click = "init()">重來</button>
+		<button ng-show="!start" ng-click = "START('O')">開始(AI黑)</button>
+		<button ng-show="!start" ng-click = "START('X')">開始(AI白)</button>
+		<button ng-show="!start" ng-click = "START('')">開始</button>
+		<div ng-show="start">
+			<canvas id="chess" width="450px" height="450px" ng-click="doClick($event)"></canvas>
+		</div>
 	</div>
 </div>

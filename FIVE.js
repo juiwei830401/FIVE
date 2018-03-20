@@ -12,11 +12,14 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 	
 	$scope.OWin = [];				// 黑子連線可能統計
 	$scope.XWin = [];				// 白子連線可能統計
+	$scope.start = false;				// 判斷是否開始
 	$scope.over = false;				// 判斷是否結束
 	$scope.chessBoard = [];				// 棋盤初始
+	var len = 15;					// 棋盤格線
 	$scope.OX = 'O';				// 黑白子順序
 	$scope.AI_status = false;			// AI設定
-	//var chess_len = 19;	
+	
+	
 	
 	$scope.init = function(){
 		$scope.chessBoard = [];
@@ -25,42 +28,51 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 		$scope.wins = [];
 		$scope.OWin = [];
 		$scope.XWin = [];
+		$scope.start = false;
 		$scope.over = false;
+		$scope.AI_status = false;
 		
 		//清除棋盤
 		context.fillStyle = "#FFFFFF";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		
 		//繪製棋盤
-		for (var i = 0; i < 15; i++) {
+		for (var i = 0; i < len; i++) {
 			$scope.chessBoard[i] = [];
-			for (var j = 0; j < 15; j++) {
+			
+			//棋盤初始
+			for (var j = 0; j < len; j++) {
 				$scope.chessBoard[i][j] = 0;
 			}
+			
 			context.strokeStyle = "#BFBFBF";
+			
+			//縱線
 			context.beginPath();
-			context.moveTo(15 + i *30, 15);
+			context.moveTo(15 + i * 30, 15);
 			context.lineTo(15 + i *30, canvas.height - 15);
 			context.closePath();
 			context.stroke();
+			
+			//橫線
 			context.beginPath();
-			context.moveTo(15, 15 + i *30);
+			context.moveTo(15, 15 + i * 30);
 			context.lineTo(canvas.width - 15, 15 + i * 30);
 			context.closePath();
 			context.stroke();
 		}
 		
 		// 初始化赢法統計數據
-		for (var i = 0; i < 15; i++) {
+		for (var i = 0; i < len; i++) {
 			$scope.wins[i] = [];
-			for (var j = 0; j < 15; j++) {
+			for (var j = 0; j < len; j++) {
 				$scope.wins[i][j] = []
 			}
 		}
 
 		// 連線方向: | 
-		for (var i = 0; i < 15; i++) {
-			for (var j = 0; j < 11; j++) {
+		for (var i = 0; i < len; i++) {
+			for (var j = 0; j < len-4; j++) {
 				for (var k = 0; k < 5; k++) {
 					$scope.wins[i][j + k][count] = true;
 				}
@@ -69,8 +81,8 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 		}
 
 		// 連線方向: - 
-		for (var i = 0; i < 15; i++) {
-			for (var j = 0; j < 11; j++) {
+		for (var i = 0; i < len; i++) {
+			for (var j = 0; j < len-4; j++) {
 				for (var k = 0; k < 5; k++) {
 					$scope.wins[j + k][i][count] = true;
 				}
@@ -79,8 +91,8 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 		}
 
 		// 連線方向: / 
-		for (var i = 0; i < 11; i++) {
-			for (var j = 0; j < 11; j++) {
+		for (var i = 0; i < len-4; i++) {
+			for (var j = 0; j < len-4; j++) {
 				for (var k = 0; k < 5; k++) {
 					$scope.wins[i + k][j + k][count] = true;
 				}
@@ -89,8 +101,8 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 		}
 
 		// 連線方向: \ 
-		for (var i = 0; i < 11; i++) {
-			for (var j = 14; j > 3; j--) {
+		for (var i = 0; i < len-4; i++) {
+			for (var j = len-1; j > 3; j--) {
 				for (var k = 0; k < 5; k++) {
 					$scope.wins[i + k][j - k][count] = true;
 				}
@@ -103,7 +115,6 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 			$scope.OWin[i] = 0;
 			$scope.XWin[i] = 0;
 		}
-		console.log(count)
 	}
 		
 	$scope.init();
@@ -138,7 +149,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 						$scope.XWin[k] = 6;
 						//連線子數 = 5，該方獲勝
 						if ($scope.OWin[k] == 5) {
-							window.alert("玩家(黑子)獲勝");
+							alert("玩家(黑子)獲勝");
 							//遊戲結束
 							$scope.over = true;
 						}
@@ -149,7 +160,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 						$scope.OWin[k] = 6;
 						//連線子數 = 5，該方獲勝
 						if ($scope.XWin[k] == 5) {
-							window.alert("玩家(白子)獲勝");
+							alert("玩家(白子)獲勝");
 							//遊戲結束
 							$scope.over = true;
 						}
@@ -179,6 +190,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 	 * @param y     棋子y軸位置
 	 */
 	$scope.oneStep = function(x, y) {
+		//棋子CSS樣式
 		context.beginPath();
 		context.arc(15 + x * 30, 15 + y * 30, 15 - 2, 0, 2 * Math.PI);
 		context.closePath();
@@ -200,18 +212,23 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 	/**
 	 * ===================================開始===================================
 	 */
-	$scope.start = function(type){
+	$scope.START = function(type){
+		$scope.start = true;
 		if(type == 'O'){
 			$scope.AI_status = true;
-			//AI黑子先手:固定第一子在[7,7]位置
-			$scope.oneStep(7, 7);
-			$scope.chessBoard[7][7] = 2;
+			//AI黑子先手:固定第一子在中間位置
+			var first = Math.floor(len/2);
+			$scope.oneStep(first, first);
+			$scope.chessBoard[first][first] = 2;
 			//黑白子順序調換
 			$scope.OX = 'X';
 		}
 		else if(type == 'X'){
 			//AI白子後手:待玩家點擊後再判斷
 			$scope.AI_status = true;
+		}
+		else{
+			$scope.AI_status = false;
 		}
 	}
 	
@@ -328,7 +345,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 					$scope.XWin[k] = 6;
 					//連線子數 = 5，該方獲勝
 					if ($scope.OWin[k] == 5) {
-						window.alert("AI(黑子)獲勝");
+						alert("AI(黑子)獲勝");
 						$scope.over = true;
 					}
 				}else{
@@ -338,7 +355,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 					$scope.OWin[k] = 6;
 					//連線子數 = 5，該方獲勝
 					if ($scope.XWin[k] == 5) {
-						window.alert("AI(白子)獲勝");
+						alert("AI(白子)獲勝");
 						$scope.over = true;
 					}
 				}

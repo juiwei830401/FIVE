@@ -7,17 +7,17 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 	 
 	var canvas = document.getElementById("chess");
 	var context = canvas.getContext("2d");
-	var count = 0;					// 贏法統計記數
-	$scope.wins = [];				// 贏法統計數據
+	var count = 0;						// 贏法統計記數
+	$scope.wins = [];					// 贏法統計數據
 	
-	$scope.OWin = [];				// 黑子連線可能統計
-	$scope.XWin = [];				// 白子連線可能統計
-	$scope.start = false;				// 判斷是否開始
-	$scope.over = false;				// 判斷是否結束
-	$scope.chessBoard = [];				// 棋盤初始
-	var len = 15;					// 棋盤格線
-	$scope.OX = 'O';				// 黑白子順序
-	$scope.AI_status = false;			// AI設定
+	$scope.OWin = [];					// 黑子連線可能統計
+	$scope.XWin = [];					// 白子連線可能統計
+	$scope.start = false;					// 判斷是否開始
+	$scope.over = false;					// 判斷是否結束
+	$scope.chessBoard = [];					// 棋盤初始
+	var len = 15 ;						// 棋盤格線
+	$scope.OX = 'O';					// 黑白子順序
+	$scope.AI_status = false;				// AI設定
 	
 	
 	
@@ -220,6 +220,18 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 			var first = Math.floor(len/2);
 			$scope.oneStep(first, first);
 			$scope.chessBoard[first][first] = 2;
+			
+			for (var k = 0; k < count; k ++) {
+				if ($scope.wins[first][first][k]) {
+					if($scope.OX == 'O'){
+						//黑子此連線子數 + 1(子數為5取勝)
+						$scope.OWin[k] ++;
+						//白子此連線子數 = 6(代表永遠無法等於5，永遠無法以此方向連線取勝)
+						$scope.XWin[k] = 6;
+					}
+				}
+			}
+			
 			//黑白子順序調換
 			$scope.OX = 'X';
 		}
@@ -240,19 +252,19 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 			return;
 		}
 
-		var u = 0;			// 電腦預計落子的x位置
-		var v = 0;			// 電腦預計落子的y位置
-		var myScore = [];		// 玩家的分數
-		var aiScore = [];		// 電腦的分數
-		var max = 0;			// 最優位置的分數
-		var myWin = [];			// 玩家連線可能統計
-		var aiWin = [];			// 電腦連線可能統計
+		var u = 0;				// 電腦預計落子的x位置
+		var v = 0;				// 電腦預計落子的y位置
+		var myScore = [];			// 玩家的分數
+		var aiScore = [];			// 電腦的分數
+		var max = 0;				// 最優位置的分數
+		var myWin = [];				// 玩家連線可能統計
+		var aiWin = [];				// 電腦連線可能統計
 		
 		// 初始化分数的二维數組
-		for (var i = 0; i < 15; i++) {
+		for (var i = 0; i < len; i++) {
 			myScore[i] = [];
 			aiScore[i] = [];
-			for (var j = 0; j < 15; j++) {
+			for (var j = 0; j < len; j++) {
 				myScore[i][j] = 0;
 				aiScore[i][j] = 0;
 			}
@@ -270,8 +282,8 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 		}
 		
 		// 透過贏法統計數組 為兩個二維數組分別計分
-		for (var i = 0; i < 15; i++) {
-			for (var j = 0; j < 15; j++) {
+		for (var i = 0; i < len; i++) {
+			for (var j = 0; j < len; j++) {
 				if ($scope.chessBoard[i][j] == 0) {
 					for (var k = 0; k < count; k++) {
 						if ($scope.wins[i][j][k]) {
@@ -285,13 +297,13 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 								myScore[i][j] += 10000;
 							}
 							if (aiWin[k] == 1) {
-								aiScore[i][j] += 110;
+								aiScore[i][j] += 150;
 							} else if (aiWin[k] == 2) {
-								aiScore[i][j] += 220;
+								aiScore[i][j] += 300;
 							} else if (aiWin[k] == 3) {
-								aiScore[i][j] += 2200;
+								aiScore[i][j] += 3000;
 							} else if (aiWin[k] == 4) {
-								aiScore[i][j] += 20000;
+								aiScore[i][j] += 30000;
 							}
 						}
 					}
@@ -335,7 +347,6 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 		
 		$scope.oneStep(u, v);
 		$scope.chessBoard[u][v] = 2;
-		
 		for (var k = 0; k < count; k++) {
 			if ($scope.wins[u][v][k]) {
 				if($scope.OX == 'O'){

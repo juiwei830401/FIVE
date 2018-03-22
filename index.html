@@ -7,6 +7,7 @@
 		<button ng-show="!start" ng-click = "START('O')">開始(AI黑)</button>
 		<button ng-show="!start" ng-click = "START('X')">開始(AI白)</button>
 		<button ng-show="!start" ng-click = "START('')">開始</button>
+		<button ng-show="!start" ng-click = "START('OX')">開始(AI對下)</button>
 		<div ng-show="start">
 			<canvas id="chess" width="450px" height="450px" ng-click="doClick($event)"></canvas>
 		</div>

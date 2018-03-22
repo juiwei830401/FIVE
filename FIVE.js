@@ -1,5 +1,5 @@
-var app = angular.module('myFIVE', []);
-app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
+var app = angular.module('myFIVE_2', []);
+app.controller('FIVE_2', function ($rootScope, $scope, $controller, $filter, $timeout) {
 	
 	/**
 	 * ===================================初始===================================
@@ -18,7 +18,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 	var len = 15 ;						// 棋盤格線
 	$scope.OX = 'O';					// 黑白子順序
 	$scope.AI_status = false;				// AI設定
-	
+	$scope.TEST_status = false;				// 測試設定
 	
 	
 	$scope.init = function(){
@@ -31,6 +31,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 		$scope.start = false;
 		$scope.over = false;
 		$scope.AI_status = false;
+		$scope.TEST_status = false;
 		
 		//清除棋盤
 		context.fillStyle = "#FFFFFF";
@@ -214,7 +215,31 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 	 */
 	$scope.START = function(type){
 		$scope.start = true;
-		if(type == 'O'){
+		
+		//AI對下
+		if(type == 'OX'){
+			$scope.TEST_status = true;
+			//AI黑子先手:固定第一子在中間位置
+			var first = Math.floor(len/2);
+			$scope.oneStep(first, first);
+			$scope.chessBoard[first][first] = 2;
+			
+			for (var k = 0; k < count; k ++) {
+				if ($scope.wins[first][first][k]) {
+					if($scope.OX == 'O'){
+						//黑子此連線子數 + 1(子數為5取勝)
+						$scope.OWin[k] ++;
+						//白子此連線子數 = 6(代表永遠無法等於5，永遠無法以此方向連線取勝)
+						$scope.XWin[k] = 6;
+					}
+				}
+			}
+			
+			//黑白子順序調換
+			$scope.OX = 'X';
+			$scope.AI();
+		}
+		else if(type == 'O'){
 			$scope.AI_status = true;
 			//AI黑子先手:固定第一子在中間位置
 			var first = Math.floor(len/2);
@@ -288,22 +313,26 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 					for (var k = 0; k < count; k++) {
 						if ($scope.wins[i][j][k]) {
 							if (myWin[k] == 1) {
-								myScore[i][j] += 100;
+								
+								var maxNum = 10;  
+								var minNum = 0;  
+								var n = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+								myScore[i][j] += 75;
 							} else if (myWin[k] == 2) {
-								myScore[i][j] += 200;
+								myScore[i][j] += 290;
 							} else if (myWin[k] == 3) {
-								myScore[i][j] += 1000;
+								myScore[i][j] += 3050;
 							} else if (myWin[k] == 4) {
-								myScore[i][j] += 10000;
+								myScore[i][j] += 15000;
 							}
 							if (aiWin[k] == 1) {
-								aiScore[i][j] += 150;
+								aiScore[i][j] += 85;
 							} else if (aiWin[k] == 2) {
 								aiScore[i][j] += 300;
 							} else if (aiWin[k] == 3) {
-								aiScore[i][j] += 3000;
+								aiScore[i][j] += 3200;
 							} else if (aiWin[k] == 4) {
-								aiScore[i][j] += 30000;
+								aiScore[i][j] += 16000;
 							}
 						}
 					}
@@ -380,6 +409,16 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter) {
 			}else{
 				$scope.OX = 'O';
 			}
+			if($scope.TEST_status){
+				$scope.TEST();
+			}
 		}
+	}
+	
+	/**
+	 * ===================================AI===================================
+	 */
+	$scope.TEST = function(){
+		setTimeout(function(){$scope.AI();},400);
 	}
 });

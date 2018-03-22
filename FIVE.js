@@ -370,6 +370,12 @@ app.controller('FIVE_2', function ($rootScope, $scope, $controller, $filter, $ti
 			}
 		}
 		
+		//如果AI已經判斷認定全部空位皆為0，判定和局
+		if(myScore[u][v] == 0 && aiScore[u][v] == 0){
+			alert('和局');
+			return;
+		}
+		
 		$scope.oneStep(u, v);
 		$scope.chessBoard[u][v] = 2;
 		for (var k = 0; k < count; k++) {

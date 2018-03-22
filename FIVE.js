@@ -313,10 +313,6 @@ app.controller('FIVE_2', function ($rootScope, $scope, $controller, $filter, $ti
 					for (var k = 0; k < count; k++) {
 						if ($scope.wins[i][j][k]) {
 							if (myWin[k] == 1) {
-								
-								var maxNum = 10;  
-								var minNum = 0;  
-								var n = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
 								myScore[i][j] += 75;
 							} else if (myWin[k] == 2) {
 								myScore[i][j] += 290;

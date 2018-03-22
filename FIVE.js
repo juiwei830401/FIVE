@@ -1,5 +1,5 @@
-var app = angular.module('myFIVE_2', []);
-app.controller('FIVE_2', function ($rootScope, $scope, $controller, $filter, $timeout) {
+var app = angular.module('myFIVE', []);
+app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $timeout) {
 	
 	/**
 	 * ===================================初始===================================

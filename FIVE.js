@@ -34,7 +34,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $time
 		$scope.TEST_status = false;
 		
 		//清除棋盤
-		context.fillStyle = "#FFFFFF";
+		context.fillStyle = "#F3A440";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		
 		//繪製棋盤
@@ -46,7 +46,7 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $time
 				$scope.chessBoard[i][j] = 0;
 			}
 			
-			context.strokeStyle = "#BFBFBF";
+			context.strokeStyle = "#444444";
 			
 			//縱線
 			context.beginPath();

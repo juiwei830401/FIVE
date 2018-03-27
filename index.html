@@ -2,13 +2,13 @@
 <script src="FIVE.js" type="text/javascript"></script>
 <div ng-app="myFIVE" ng-controller="FIVE">
 	<!-- HEAD -->
-	<div>
+	<div style="text-align:center;">
 		<button ng-show="start" ng-click = "init()">重來</button>
 		<button ng-show="!start" ng-click = "START('O')">開始(AI黑)</button>
 		<button ng-show="!start" ng-click = "START('X')">開始(AI白)</button>
 		<button ng-show="!start" ng-click = "START('')">開始</button>
 		<button ng-show="!start" ng-click = "START('OX')">開始(AI對下)</button>
-		<div ng-show="start">
+		<div ng-show="start" style="text-align:center;">
 			<canvas id="chess" width="450px" height="450px" ng-click="doClick($event)"></canvas>
 		</div>
 	</div>

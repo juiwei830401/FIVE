@@ -314,15 +314,15 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $time
 						if ($scope.wins[i][j][k]) {
 							if (myWin[k] == 1) {
 								//75
-								var score_1 = Math.round( Math.random()*15 ) + 65;
+								var score_1 = Math.round( Math.random()*10 ) + 65;
 								myScore[i][j] += score_1;
 							} else if (myWin[k] == 2) {
 								//290
-								var score_2 = Math.round( Math.random()*30 ) + 275;
+								var score_2 = Math.round( Math.random()*15 ) + 280;
 								myScore[i][j] += score_2;
 							} else if (myWin[k] == 3) {
 								//3050
-								var score_3 = Math.round( Math.random()*200 ) + 3000;
+								var score_3 = Math.round( Math.random()*200 ) + 2950;
 								myScore[i][j] += score_3;
 							} else if (myWin[k] == 4) {
 								//15000
@@ -331,15 +331,15 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $time
 							}
 							if (aiWin[k] == 1) {
 								//85
-								var score_1 = Math.round( Math.random()*20 ) + 70;
+								var score_1 = Math.round( Math.random()*13 ) + 75;
 								aiScore[i][j] += score_1;
 							} else if (aiWin[k] == 2) {
 								//300
-								var score_2 = Math.round( Math.random()*35 ) + 280;
+								var score_2 = Math.round( Math.random()*25 ) + 285;
 								aiScore[i][j] += score_2;
 							} else if (aiWin[k] == 3) {
 								//3200
-								var score_3 = Math.round( Math.random()*150 ) + 3100;
+								var score_3 = Math.round( Math.random()*130 ) + 3100;
 								aiScore[i][j] += score_3;
 							} else if (aiWin[k] == 4) {
 								//16000

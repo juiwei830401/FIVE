@@ -20,6 +20,8 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $time
 	$scope.AI_status = false;				// AI設定
 	$scope.TEST_status = false;				// 測試設定
 	
+	$scope.oldX = null;					// 紀錄上一子的X軸
+	$scope.oldY = null;					// 紀錄上一子的Y軸
 	
 	$scope.init = function(){
 		$scope.chessBoard = [];
@@ -178,8 +180,8 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $time
 				}
 				
 				//輪到AI
-				if($scope.AI_status){
-					$scope.AI();
+				if ($scope.AI_status) {
+					setTimeout(function(){$scope.AI();},400);
 				}
 			}
 		}
@@ -209,33 +211,81 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $time
 		context.fillStyle = gradient;
 		context.fill();
 		
-		//線條清空，重新標記
+		debugger
+		//上一子的標記紅框用棋盤底色清除
+		if ($scope.oldX != null && $scope.oldY != null) {
+			$scope.setMark($scope.oldX, $scope.oldY, '#F3A440');
+		}
+		
+		//標記紅框
+		$scope.setMark(x, y, '#ff0000');
+		
+		
+		//紀錄座標軸
+		$scope.oldX = x;
+		$scope.oldY = y;
+	}
+	
+	/**
+	 * ===================================標記===================================
+	 */
+	$scope.setMark = function(x, y, color) {
+
+		
+		//標記└
 		context.beginPath();
-		context.moveTo(15 + x * 30 + 2, 15 + y * 30 - 2);
-		context.lineTo(15 + x * 30 + 2, 15 + y * 30 - 2 + 30);
-		context.lineWidth = 3;
-		context.strokeStyle = "#ff0000";
+		context.moveTo(x * 30, y * 30);
+		context.lineTo(x * 30, y * 30 + 10);
+		context.lineWidth = 2;
+		context.strokeStyle = color;
+		context.stroke();
+		context.beginPath();
+		context.moveTo(x * 30     , y * 30);
+		context.lineTo(x * 30 + 10, y * 30);
+		context.lineWidth = 2;
+		context.strokeStyle = color;
+		context.stroke();
+		
+		//標記┘
+		context.beginPath();
+		context.moveTo(x * 30 + 20, y * 30);
+		context.lineTo(x * 30 + 30, y * 30);
+		context.lineWidth = 2;
+		context.strokeStyle = color;
+		context.stroke();
+		context.beginPath();
+		context.moveTo(x * 30 + 30, y * 30);
+		context.lineTo(x * 30 + 30, y * 30 + 10);
+		context.lineWidth = 2;
+		context.strokeStyle = color;
 		context.stroke();
 
+		//標記┐
 		context.beginPath();
-		context.moveTo(15 + x * 30 + 2     , 15 + y * 30 - 2);
-		context.lineTo(15 + x * 30 + 2 + 30, 15 + y * 30 - 2);
-		context.lineWidth = 3;
-		context.strokeStyle = "#ff0000";
+		context.moveTo(x * 30 + 20, y * 30 + 30);
+		context.lineTo(x * 30 + 30, y * 30 + 30);
+		context.lineWidth = 2;
+		context.strokeStyle = color;
+		context.stroke();
+		context.beginPath();
+		context.moveTo(x * 30 + 30, y * 30 + 30);
+		context.lineTo(x * 30 + 30, y * 30 + 20);
+		context.lineWidth = 2;
+		context.strokeStyle = color;
 		context.stroke();
 
+		//標記┌
 		context.beginPath();
-		context.moveTo(15 + x * 30 + 2 + 30, 15 + y * 30 - 2 + 30);
-		context.lineTo(15 + x * 30 + 2     , 15 + y * 30 - 2 + 30);
-		context.lineWidth = 3;
-		context.strokeStyle = "#ff0000";
+		context.moveTo(x * 30     , y * 30 + 30);
+		context.lineTo(x * 30 + 10, y * 30 + 30);
+		context.lineWidth = 2;
+		context.strokeStyle = color;
 		context.stroke();
-
 		context.beginPath();
-		context.moveTo(15 + x * 30 + 2 + 30, 15 + y * 30 - 2 + 30);
-		context.lineTo(15 + x * 30 + 2 + 30, 15 + y * 30 - 2);
-		context.lineWidth = 3;
-		context.strokeStyle = "#ff0000";
+		context.moveTo(x * 30, y * 30 + 30);
+		context.lineTo(x * 30, y * 30 + 20);
+		context.lineWidth = 2;
+		context.strokeStyle = color;
 		context.stroke();
 	}
 	

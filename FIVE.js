@@ -208,6 +208,35 @@ app.controller('FIVE', function ($rootScope, $scope, $controller, $filter, $time
 		}
 		context.fillStyle = gradient;
 		context.fill();
+		
+		//線條清空，重新標記
+		context.beginPath();
+		context.moveTo(x * 30, y * 30);
+		context.lineTo(x * 30, x * 30 + 30);
+		context.lineWidth = 3;
+		context.strokeStyle = "#ff0000";
+		context.stroke();
+
+		context.beginPath();
+		context.moveTo(x * 30, y * 30);
+		context.lineTo(x * 30 + 30, x * 30);
+		context.lineWidth = 3;
+		context.strokeStyle = "#ff0000";
+		context.stroke();
+
+		context.beginPath();
+		context.moveTo(x * 30 + 30, y * 30 + 30);
+		context.lineTo(x * 30, x * 30 + 30);
+		context.lineWidth = 3;
+		context.strokeStyle = "#ff0000";
+		context.stroke();
+
+		context.beginPath();
+		context.moveTo(x * 30 + 30, y * 30 + 30);
+		context.lineTo(x * 30 + 30, x * 30);
+		context.lineWidth = 3;
+		context.strokeStyle = "#ff0000";
+		context.stroke();
 	}
 	
 	/**
